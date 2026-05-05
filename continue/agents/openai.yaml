@@ -1,0 +1,4 @@
+interface:
+  display_name: "Continue"
+  short_description: "Resume an unfinished scratch task"
+  default_prompt: "Use $continue to resume an unfinished scratch task by exact id or prefix."

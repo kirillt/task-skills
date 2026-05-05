@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bundle"
+  short_description: "Run several tasks in one phased bundle"
+  default_prompt: "Use $bundle to run more than one task in one shared parent scratch task."

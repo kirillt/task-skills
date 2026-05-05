@@ -1,0 +1,4 @@
+interface:
+  display_name: "Start"
+  short_description: "Start a task template or one-off task"
+  default_prompt: "Use $start to begin one task template or one-off task idea now."

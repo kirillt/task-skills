@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prune"
+  short_description: "Delete completed scratch tasks"
+  default_prompt: "Use $prune to delete completed scratch tasks or preview the delete set."

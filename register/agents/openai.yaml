@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Register"
+  short_description: "Create a scratch task record"
+  default_prompt: "Use $task-register to create a new scratch task record without executing the task itself."
