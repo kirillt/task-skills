@@ -1,9 +1,9 @@
 ---
 name: task-register
-description: Create a new scratch task record for a task run without executing any task logic by itself. Used by `$start`, `$bundle`, and `$task-todo` to keep scratch registration consistent.
+description: Create a new scratch task record for a task run without executing any task logic by itself. Used by `$start`, `$batch`, `$bundle`, and `$task-todo` to keep scratch registration consistent.
 ---
 
-# Task Register
+# Register
 
 ## Overview
 
@@ -11,6 +11,7 @@ Use this skill to create a scratch task record in a consistent format.
 
 This is primarily a helper skill for other task-container skills:
 - `$start`
+- `$batch`
 - `$bundle`
 - `$task-todo`
 
@@ -35,6 +36,7 @@ This skill operates only on:
 The caller must determine these pieces before registration:
 - target kind:
   - template-backed task
+  - batch-oriented task
   - one-off task idea
   - bundle parent task
 - scratch path to create
@@ -55,6 +57,7 @@ When creating a new scratch task, write a concise record that includes:
 
 Preferred status values:
 - `in progress` for `$start`
+- a batch-in-progress status for `$batch`
 - `Not started yet` for `$task-todo`
 - a bundle-in-progress status for `$bundle` parent runs
 
@@ -65,6 +68,7 @@ Preferred status values:
 3. Create the scratch task record immediately before any execution that depends on it.
 4. Use the caller-provided initial status:
    - `$start` creates a scratch record and begins execution right away
+   - `$batch` creates one scratch record for the whole iterative batch run
    - `$task-todo` creates a scratch record but does not execute the task
    - `$bundle` creates one parent scratch record for the whole phased run
 5. Keep the record concise but sufficient for `$continue` to list and resume it later.

@@ -45,6 +45,7 @@ If only one task entry is provided, stop with an error and tell the user to use 
 4. Record each input task as its own phase inside that one scratch task.
 5. For each phase:
    - apply the same template-resolution or one-off initialization rules as `$start`
+   - the phase may itself be a batch-oriented task that uses `$batch` internally
    - do not create a second scratch task for the individual phase
    - store the phase plan and status inside the parent scratch task
 6. Execute the phases in order.
@@ -54,6 +55,7 @@ If only one task entry is provided, stop with an error and tell the user to use 
 
 - `$bundle` always uses one parent scratch task for the whole run.
 - Each phase is recorded inside that parent scratch task, not as a standalone scratch task.
+- A bundled phase may itself use `$batch`; in that case the parent bundle scratch tracks phase-level progress while the phase follows its own batch-table rules.
 - `$bundle` must not silently accept a single-task input.
 
 ## Output

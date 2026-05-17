@@ -3,7 +3,7 @@ name: task-todo
 description: Create a scratch task for later execution without starting it yet. Use when the user invokes `$task-todo` to queue a task now and continue it later.
 ---
 
-# Task Todo
+# Todo
 
 ## Overview
 

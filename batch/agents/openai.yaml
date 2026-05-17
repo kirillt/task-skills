@@ -1,0 +1,4 @@
+interface:
+  display_name: "Batch"
+  short_description: "Run one task in repeated review batches"
+  default_prompt: "Use $batch for one logical task that iterates a collection in repeated fixed-size batches, always shows a mandatory batch table, and normally waits for approval after each batch."

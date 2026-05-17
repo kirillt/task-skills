@@ -1,4 +1,4 @@
 interface:
-  display_name: "Task Todo"
+  display_name: "Todo"
   short_description: "Register a task to do later"
   default_prompt: "Use $task-todo to create a scratch task now without starting it yet."
