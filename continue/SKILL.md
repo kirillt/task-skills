@@ -47,7 +47,7 @@ If no input is provided, treat that as the broadest ambiguous case: discover unf
    - do not continue automatically from a prefix match; present the chooser table and require an explicit selection
 5. If zero unfinished scratch tasks exist, report that there is nothing to continue and stop.
 6. If the current input is empty or ambiguous, present a chooser table:
-   - show a compact Markdown table with exactly two columns:
+   - assemble a compact Markdown table with exactly two columns and pass it to `$display-table`:
      - `Scratch task`
      - `Description`
    - in `Scratch task`, use the basename when unambiguous, otherwise the path relative to `scratch/`

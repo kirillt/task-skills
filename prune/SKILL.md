@@ -26,7 +26,7 @@ This skill operates only on repo-root `scratch/`.
 3. Safe-to-prune criterion:
    - only scratch tasks with `Completed` status are safe to prune automatically
 4. Produce a Keep/Delete plan every time.
-5. Present the Keep/Delete plan as one Markdown table with exactly two columns:
+5. Present the Keep/Delete plan by passing one Markdown table to `$display-table` with exactly two columns:
    - `Keep`
    - `Delete`
 6. If `--dry-run` is present:

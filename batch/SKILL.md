@@ -72,7 +72,7 @@ In addition to normal scratch-task fields, a batch task must record enough state
    - if retrieving the first batch makes the total item count knowable, report that total to the user before or alongside the first batch table
 4. Process only up to the current batch size.
 5. Generate proposals for that batch according to the domain workflow.
-6. Show a batch table in chat for that batch.
+6. Pass the batch table to `$display-table` for that batch.
    - The table is mandatory.
    - The table must be shown even in auto-approve mode.
 7. Default behavior:
@@ -94,7 +94,7 @@ In addition to normal scratch-task fields, a batch task must record enough state
 - Do not create a second scratch task for later batches of the same run.
 - Do not start a new batch run without first telling the user the current batch size.
 - If the total item count is known at run start, tell the user then.
-- If the total is not known at run start but becomes known while retrieving the first batch, tell the user before or alongside the first batch table.
+- If the total is not known at run start but becomes known while retrieving the first batch, tell the user before or alongside the first batch table display.
 - Do not skip the batch table.
 - Do not mark items as processed before the batch decision is recorded.
 - Auto-approve is not the standard mode; standard mode is show the batch table and wait.
