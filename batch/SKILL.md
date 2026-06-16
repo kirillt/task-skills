@@ -123,6 +123,11 @@ In addition to normal scratch-task fields, a batch task must record enough state
 6. In normal mode, pass the batch table to `$display-table` for that batch.
    - The first batch table is mandatory.
    - The table must be shown even in auto-approve mode.
+   - When a batch table is shown, it must include every current batch row as a
+     separate row. Do not group, collapse, summarize, or replace table rows
+     with ranges such as `15-30`, even when rows are repetitive or obvious.
+     Boring rows may be omitted only by omitting the entire main table through
+     an explicitly enabled fast-mode rule.
    - Together with the first batch table, offer fast mode once for the current
      run and record the exact offer text in scratch.
 7. Default behavior:
@@ -186,6 +191,9 @@ In addition to normal scratch-task fields, a batch task must record enough state
 - If the total is not known at run start but becomes known while retrieving the first batch, tell the user before or alongside the first batch table display.
 - Do not skip the first batch table.
 - Do not skip any table in normal mode.
+- Do not collapse rows inside a shown batch table. Shown batch tables must be
+  complete row-for-row; use fast mode to omit a whole eligible table instead of
+  shortening it.
 - Do not use fast mode before the user explicitly enables it for the current
   run.
 - If the user declines fast mode, do not offer it again in that same scratch
