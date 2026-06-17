@@ -129,7 +129,10 @@ In addition to normal scratch-task fields, a batch task must record enough state
      Boring rows may be omitted only by omitting the entire main table through
      an explicitly enabled fast-mode rule.
    - Together with the first batch table, offer fast mode once for the current
-     run and record the exact offer text in scratch.
+     run in scratch only when more than one batch is expected or the remaining
+     collection is not yet bounded. If the current batch is known to be the only
+     batch in the run, do not offer fast mode and record that it was not offered
+     because the run is single-batch.
 7. Default behavior:
    - stop after showing the batch table
    - treat the current batch items as pending items
@@ -143,7 +146,10 @@ In addition to normal scratch-task fields, a batch task must record enough state
    only as confirmation of the current batch, not as fast-mode acceptance. The
    user must write at least `fast` or explicitly quote the fast-mode offer to
    accept fast mode. If the user explicitly declines fast mode, record the
-   decline and do not offer fast mode again in the same run.
+   decline and do not offer fast mode again in the same run. If fast mode was
+   not offered because the run is known to have only one batch, ignore a `fast`
+   reply as a mode change and treat it only as ordinary approval if the domain
+   rules allow the current batch to be approved by that reply.
 10. After approval, corrections, or rejections:
    - record the decision in the same scratch task
    - apply approved current-batch rows according to the domain workflow
@@ -196,6 +202,8 @@ In addition to normal scratch-task fields, a batch task must record enough state
   shortening it.
 - Do not use fast mode before the user explicitly enables it for the current
   run.
+- Do not offer fast mode for a run whose complete work is already known to fit
+  in the first and only batch.
 - If the user declines fast mode, do not offer it again in that same scratch
   run.
 - Do not use fast mode to hide pending items or unresolved/blocking rows.
