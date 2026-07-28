@@ -48,6 +48,7 @@ The caller must determine these pieces before invoking the batch loop:
 - the batch table schema
 - the proposal-generation logic for the current domain
 - the approval behavior for the run
+- whether to offer fast mode for the run
 
 The batch size may be changed by the user between batches.
 
@@ -57,9 +58,11 @@ In addition to normal scratch-task fields, a batch task must record enough state
 - collection source or generation rule
 - current batch size
 - review mode: normal or fast
-- whether fast mode has already been offered, accepted, or declined for this
-  run
-- the exact fast-mode offer text shown with the first batch table
+- whether the caller permits the standard fast-mode offer
+- whether fast mode has already been offered, accepted, declined, or was not
+  offered because the caller disabled the offer or the run is single-batch
+- the exact fast-mode offer text shown with the first batch table, when an
+  offer was shown
 - processed items
 - unreviewed items or the remaining selection rule
 - scheduled items when applicable
@@ -128,11 +131,15 @@ In addition to normal scratch-task fields, a batch task must record enough state
      with ranges such as `15-30`, even when rows are repetitive or obvious.
      Boring rows may be omitted only by omitting the entire main table through
      an explicitly enabled fast-mode rule.
-   - Together with the first batch table, offer fast mode once for the current
-     run in scratch only when more than one batch is expected or the remaining
-     collection is not yet bounded. If the current batch is known to be the only
-     batch in the run, do not offer fast mode and record that it was not offered
-     because the run is single-batch.
+   - If the caller permits the standard fast-mode offer, offer fast mode once
+     for the current run only when more than one batch is expected or the
+     remaining collection is not yet bounded, and record the exact offer text
+     in scratch.
+   - If the caller permits the offer but the current batch is known to be the
+     only batch in the run, do not offer fast mode and record that it was not
+     offered because the run is single-batch.
+   - If the caller disables the standard fast-mode offer, do not mention fast
+     mode with the table and record that it was not offered by caller policy.
 7. Default behavior:
    - stop after showing the batch table
    - treat the current batch items as pending items
@@ -141,15 +148,17 @@ In addition to normal scratch-task fields, a batch task must record enough state
 8. If the run is in explicit auto-approve mode:
    - still show the batch table first
    - then apply the batch without waiting only if the domain rules allow it
-9. Treat fast mode as enabled only when the user's reply explicitly accepts
-   it. A plain batch confirmation without an explicit fast-mode mention counts
-   only as confirmation of the current batch, not as fast-mode acceptance. The
-   user must write at least `fast` or explicitly quote the fast-mode offer to
-   accept fast mode. If the user explicitly declines fast mode, record the
-   decline and do not offer fast mode again in the same run. If fast mode was
-   not offered because the run is known to have only one batch, ignore a `fast`
-   reply as a mode change and treat it only as ordinary approval if the domain
-   rules allow the current batch to be approved by that reply.
+9. Treat fast mode as enabled only when the user's reply explicitly requests
+   or accepts it. A plain batch confirmation without an explicit fast-mode
+   mention counts only as confirmation of the current batch, not as fast-mode
+   acceptance. The user must write at least `fast` or explicitly quote the
+   fast-mode offer to enable fast mode. This explicit request may enable fast
+   mode even when the caller suppressed the standard offer. If the user
+   explicitly declines fast mode, record the decline and do not offer fast
+   mode again in the same run. If fast mode was not offered because the run is
+   known to have only one batch, ignore a `fast` reply as a mode change and
+   treat it only as ordinary approval if the domain rules allow the current
+   batch to be approved by that reply.
 10. After approval, corrections, or rejections:
    - record the decision in the same scratch task
    - apply approved current-batch rows according to the domain workflow
@@ -204,6 +213,8 @@ In addition to normal scratch-task fields, a batch task must record enough state
   run.
 - Do not offer fast mode for a run whose complete work is already known to fit
   in the first and only batch.
+- When the caller disables the standard fast-mode offer, do not proactively
+  mention or suggest fast mode.
 - If the user declines fast mode, do not offer it again in that same scratch
   run.
 - Do not use fast mode to hide pending items or unresolved/blocking rows.
